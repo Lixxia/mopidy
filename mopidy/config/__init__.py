@@ -40,11 +40,14 @@ _proxy_schema['port'] = Port(optional=True)
 _proxy_schema['username'] = String(optional=True)
 _proxy_schema['password'] = Secret(optional=True)
 
+_core_schema = ConfigSchema('core')
+_core_schema['max_track_length'] = Integer(optional=False, minimum=1, maximum=10000)
+
 # NOTE: if multiple outputs ever comes something like LogLevelConfigSchema
 # _outputs_schema = config.AudioOutputConfigSchema()
 
 _schemas = [_logging_schema, _loglevels_schema, _logcolors_schema,
-            _audio_schema, _proxy_schema]
+            _audio_schema, _proxy_schema, _core_schema]
 
 _INITIAL_HELP = """
 # For further information about options in this file see:

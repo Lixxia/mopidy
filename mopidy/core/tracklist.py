@@ -5,6 +5,7 @@ import logging
 import random
 
 from mopidy import compat
+from mopidy import config
 from mopidy.core import listener
 from mopidy.models import TlTrack
 from mopidy.utils.deprecation import deprecated_property
@@ -327,16 +328,20 @@ class TracklistController(object):
             tracks = self.core.library.lookup(uri)
 
         tl_tracks = []
+        tl_limit = 10000;
+        print(self.mopidy.config.['core']['max_tracklist_length'])
+
 
         for track in tracks:
-            tl_track = TlTrack(self._next_tlid, track)
-            self._next_tlid += 1
-            if at_position is not None:
-                self._tl_tracks.insert(at_position, tl_track)
-                at_position += 1
-            else:
-                self._tl_tracks.append(tl_track)
-            tl_tracks.append(tl_track)
+            if len(tl_tracks) < tl_limit:
+                tl_track = TlTrack(self._next_tlid, track)
+                self._next_tlid += 1
+                if at_position is not None:
+                    self._tl_tracks.insert(at_position, tl_track)
+                    at_position += 1
+                else:
+                    self._tl_tracks.append(tl_track)
+                tl_tracks.append(tl_track)
 
         if tl_tracks:
             self._increase_version()

@@ -15,6 +15,21 @@ class MopidyException(Exception):
     def message(self, message):
         self._message = message
 
+# class CoreError(Exception):
+#     def __init__(self, message, *args, **kwargs):
+#         super(MopidyException, self).__init__(message, *args, **kwargs)
+#         self._message = message
+
+#     @property
+#     def message(self):
+#         return self._message
+
+#     @message.setter  # noqa
+#     def message(self, message):
+#         self._message = message
+
+# class TracklistFull(CoreError):
+
 
 class BackendError(MopidyException):
     pass
